@@ -4,7 +4,7 @@
 
 ## 启动与验收
 
-1. 按项目根目录 README 配置 `.env`，执行 `docker compose up -d --build`。本地默认开启的 `SchemaCompatibilityRunner` 会幂等创建 `market_watch`、`market_snapshot` 和 `market_price_quote` 表。若把 `SCHEMA_RUNTIME_MUTATIONS_ENABLED` 设为 `false`，应在服务启动前由 DBA 按迁移清单执行 `V1.76__market_intelligence.sql`；不要在生产环境开启运行时建表。
+1. 按项目根目录 README 配置 `.env`。若仅在本机隔离测试，把 `SCHEMA_RUNTIME_MUTATIONS_ENABLED=true`，再执行 `docker compose up -d --build`；`SchemaCompatibilityRunner` 会幂等创建 `market_watch`、`market_snapshot` 和 `market_price_quote` 表。生产或预发布环境必须保持 `false`，并在服务启动前按迁移清单执行 `V1.76__market_intelligence.sql`。`.env.production.example` 默认是 `false`，复制后不要误以为本地会自动建表。
 2. 打开 `http://localhost:5174`，登录后先在「账号管理」扫码登录一个闲鱼账号。
 3. 进入「商机发现」→「近期商品热榜」，选账号、输入关键词、添加监控，点「立即采集」。首次采集建立基线；间隔 30 分钟以上再次采集后，热榜按已知的浏览、想要、已售增量排序。平台未提供的指标显示「未知」，不会按 0 计算。
 4. 在热榜商品上点「比价」，填入真实的拼多多或 1688 同款链接、规格证据、单价、运费和起订量。价差按运费分摊后的单件成本计算。报价明确标记为「人工录入」。拼多多和 1688 的自动报价需要后续接入合法的数据接口凭据，目前不会伪装成自动抓到的价格。
