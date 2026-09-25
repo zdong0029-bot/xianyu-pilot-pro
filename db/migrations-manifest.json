@@ -610,11 +610,19 @@
           {
             "version": "1.75",
             "description": "add proactive message tables (user_feature_visit_log + ai_cs_proactive_message) for xiaomeng autonomous outreach on first workflow visit",
-            "path": "apps/core-api/src/main/resources/db/migration/V1.75__add_proactive_message_tables.sql",
-            "sha256": "ce2fc836b53b1720a65b21678fbc17886cd2145dfea8979206d0f9dd9013abd7",
-            "risk": "expand",
-            "rollback": "restore"
-          }
+          "path": "apps/core-api/src/main/resources/db/migration/V1.75__add_proactive_message_tables.sql",
+          "sha256": "ce2fc836b53b1720a65b21678fbc17886cd2145dfea8979206d0f9dd9013abd7",
+          "risk": "expand",
+          "rollback": "restore"
+        },
+        {
+          "version": "1.76",
+          "description": "market keyword watches, item snapshots, and price quote evidence",
+          "path": "apps/core-api/src/main/resources/db/migration/V1.76__market_intelligence.sql",
+          "sha256": "b738ac772a49ad5b67a302ceb14e24ddafa738ceaafac4c1b793bc6115469c7c",
+          "risk": "expand",
+          "rollback": "restore"
+        }
         ],
       "quarantined": [
         {
@@ -903,6 +911,14 @@
           "description": "add refund cancel config columns to xianyu_account and unregister columns to xianyu_trade_order",
           "path": "apps/automation-service/migrations/V1.34__add_refund_cancel_config.sql",
           "sha256": "668a884ab04c6823cc3fe4dc181f3fffd16de8199727779c13c90427877c15ff",
+          "risk": "expand",
+          "rollback": "restore"
+        },
+        {
+          "version": "1.35",
+          "description": "market keyword watches, item metric snapshots, and price quote evidence",
+          "path": "apps/automation-service/migrations/V1.35__market_intelligence.sql",
+          "sha256": "b738ac772a49ad5b67a302ceb14e24ddafa738ceaafac4c1b793bc6115469c7c",
           "risk": "expand",
           "rollback": "restore"
         }
