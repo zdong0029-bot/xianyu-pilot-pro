@@ -1,5 +1,6 @@
 
 from .routes import ai_transaction_engine, opportunity, workflow
+from .routes import market
 from .routes import account, order, dashboard, items, auto_delivery, auto_reply, kami, messages, system, internal
 from .routes import quick_reply as quick_reply_module
 from .routes import sse as sse_module
@@ -29,6 +30,7 @@ from fastapi import APIRouter
 api_router = APIRouter()
 api_router.include_router(ai_transaction_engine.router, tags=['aiTransaction'])
 api_router.include_router(opportunity.router, tags=['opportunity'])
+api_router.include_router(market.router, tags=['marketIntelligence'])
 api_router.include_router(workflow.router, tags=['workflow'])
 api_router.include_router(account.router, tags=["account"])
 api_router.include_router(order.router, tags=["order"])
