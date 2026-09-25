@@ -551,6 +551,40 @@ public class AutomationProxyController {
         return Result.ok(result);
     }
 
+    @GetMapping("/market/watches")
+    public Result<Object> marketWatches() {
+        return Result.ok(automationClient.getInternalForData("/api/market/watches", Map.of()));
+    }
+
+    @PostMapping("/market/watches")
+    public Result<Object> addMarketWatch(@RequestBody Map<String, Object> body) {
+        return Result.ok(automationClient.postInternalForData("/api/market/watches", body));
+    }
+
+    @PostMapping("/market/watches/{watchId}/collect")
+    public Result<Object> collectMarketWatch(@PathVariable Long watchId) {
+        return Result.ok(automationClient.postInternalForData(
+                "/api/market/watches/" + watchId + "/collect", Map.of(), 120));
+    }
+
+    @GetMapping("/market/trends")
+    public Result<Object> marketTrends(@RequestParam Long watchId,
+                                      @RequestParam(defaultValue = "7") int days,
+                                      @RequestParam(defaultValue = "50") int limit) {
+        return Result.ok(automationClient.getInternalForData("/api/market/trends",
+                Map.of("watchId", watchId, "days", days, "limit", limit)));
+    }
+
+    @PostMapping("/market/quotes")
+    public Result<Object> addMarketQuote(@RequestBody Map<String, Object> body) {
+        return Result.ok(automationClient.postInternalForData("/api/market/quotes", body));
+    }
+
+    @GetMapping("/market/comparisons")
+    public Result<Object> marketComparisons(@RequestParam String itemId) {
+        return Result.ok(automationClient.getInternalForData("/api/market/comparisons", Map.of("itemId", itemId)));
+    }
+
     @PostMapping("/opportunity/analyze")
     public Result<Object> opportunityAnalyze(@RequestBody(required = false) Map<String, Object> body) {
         Map<String, Object> payload = body == null ? new LinkedHashMap<>() : new LinkedHashMap<>(body);

@@ -405,6 +405,19 @@ def _normalize_mtop_search_item(raw: dict) -> dict:
         or raw.get("desc", "")
     )
 
+    def optional_count(*values):
+        """Keep unavailable engagement metrics distinct from a real zero."""
+        for value in values:
+            if value is None or value == "":
+                continue
+            try:
+                parsed = int(str(value).replace(",", "").strip())
+            except (TypeError, ValueError):
+                continue
+            if parsed >= 0:
+                return parsed
+        return None
+
     return {
         "title": title,
         "price": price,
@@ -413,19 +426,9 @@ def _normalize_mtop_search_item(raw: dict) -> dict:
         "itemId": item_id,
         "seller": seller,
         "area": area,
-        "soldCount": int(
-            cp_args.get("soldCount")
-            or raw.get("soldCount")
-            or raw.get("sales")
-            or 0
-        ),
-        "wantCount": int(
-            cp_args.get("wantCount")
-            or raw.get("wantCount")
-            or raw.get("want")
-            or raw.get("likeCount")
-            or 0
-        ),
+        "soldCount": optional_count(cp_args.get("soldCount"), raw.get("soldCount"), raw.get("sales")),
+        "wantCount": optional_count(cp_args.get("wantCount"), raw.get("wantCount"), raw.get("want"), raw.get("likeCount")),
+        "viewCount": optional_count(cp_args.get("viewCount"), raw.get("viewCount"), raw.get("browseCount")),
         "description": description,
     }
 

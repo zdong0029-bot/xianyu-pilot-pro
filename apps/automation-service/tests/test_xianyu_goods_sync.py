@@ -19,8 +19,28 @@ from app.services.xianyu_goods_sync import (
     _build_goods_insert_values,
     _build_goods_update_values,
     _explain_publish_rejection,
+    _normalize_mtop_search_item,
     APP_KEY,
 )
+
+
+class TestSearchMetricAvailability:
+    def test_missing_metrics_remain_unknown(self):
+        item = _normalize_mtop_search_item({"title": "相机", "price": "100"})
+        assert item["soldCount"] is None
+        assert item["wantCount"] is None
+        assert item["viewCount"] is None
+
+    def test_actual_zero_and_nonzero_metrics_are_preserved(self):
+        item = _normalize_mtop_search_item({
+            "title": "相机",
+            "soldCount": 0,
+            "wantCount": "1,234",
+            "viewCount": 57,
+        })
+        assert item["soldCount"] == 0
+        assert item["wantCount"] == 1234
+        assert item["viewCount"] == 57
 
 
 class TestExplainPublishRejection:

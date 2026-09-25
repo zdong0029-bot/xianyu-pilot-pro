@@ -1783,8 +1783,9 @@ def _call_crawler_search(keyword: str, page: int, page_size: int, tenant_id: int
             "itemId": item_id,
             "seller": item.get("userNickName", ""),
             "area": item.get("area", ""),
-            "soldCount": 0,
-            "wantCount": 0,
+            "soldCount": item.get("soldCount"),
+            "wantCount": item.get("wantCount"),
+            "viewCount": item.get("viewCount"),
             "description": title,
         })
 

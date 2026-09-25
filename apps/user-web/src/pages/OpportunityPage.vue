@@ -20,7 +20,7 @@
         </div>
         <p class="subtle">支持两种商机发掘方式：输入关键词搜索商品发现潜在商机；粘贴闲鱼店铺链接获取店铺全部商品。商品关键词搜索会使用已登录闲鱼账号 Cookie 进行实时 MTOP 搜索；店铺抓取走 Node 爬虫服务。</p>
         <div class="chips" style="margin-top:18px">
-          <b>热门趋势：</b>
+          <b>快捷搜索：</b>
           <span v-for="t in tags" :key="t" class="chip" @click="clickTag(t)">{{ t }}</span>
           <span class="chip" @click="rotateTags">换一换</span>
         </div>
@@ -32,6 +32,8 @@
           <div class="metric-tile"><span>当前页竞争度估算</span><b>{{ stats.competition }}</b></div>
         </div>
       </CardPanel>
+
+      <MarketIntelligencePanel :accounts="accounts" />
 
       <CardPanel style="margin-top:16px">
         <div class="toolbar">
@@ -464,6 +466,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import CardPanel from '../components/CardPanel.vue'
+import MarketIntelligencePanel from '../components/MarketIntelligencePanel.vue'
 import AppButton from '../components/AppButton.vue'
 import PublishAddressCascader from '../components/PublishAddressCascader.vue'
 import { importGoofishStore, getCrawlJobStatus, getGoofishStoreItems, goofishSearch, uploadImage } from '../api/misc.js'
